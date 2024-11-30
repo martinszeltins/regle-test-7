@@ -58,8 +58,12 @@
                 </div>
             </div>
 
+             <div class="bg-orange-300 mt-4 p-4 rounded-md" v-if="isValidated">
+                Form Validated!
+             </div>
+
             <!-- Action Buttons -->
-            <button @click="validateForm" class="bg-blue-500 text-white px-10 py-3 rounded mt-6 hover:bg-blue-600 transition">
+            <button @click="validateForm" class="bg-blue-500 text-white px-10 py-3 rounded mt-6 hover:bg-blue-600 transition hover:active:bg-blue-800">
                 Save
             </button>
 
@@ -71,6 +75,9 @@
                 Some Number: {{ someNumber }}
             </button>
         </div>
+
+        <br>
+        <div style="font-size: 13px; max-height:200px;overflow:auto;padding: 10px;background: #f8f8f8;border-radius: 4px;font-family: monospace;"><pre><b>r$:</b> {{ r$ }}</pre></div><br><br>
     </div>
 </template>
 
@@ -79,10 +86,9 @@
     import type { RegleExternalErrorTree } from '@regle/core'
     import { required, minLength, minValue, applyIf } from '@regle/rules'
 
-    const { t, locale, setLocale } = useI18n()
-
     const someCondition = ref(true)
     const someNumber = ref(4)
+    const isValidated = ref(false)
 
     interface Form {
         referenceNumber: string
@@ -147,6 +153,8 @@
 
     const validateForm = async () => {
         const result = await r$.$validate()
+
+        isValidated.value = true
 
         console.log('Form is valid?', result)
     }
