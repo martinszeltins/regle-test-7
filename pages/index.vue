@@ -149,7 +149,7 @@
         }
     })
 
-    const { r$ } = useRegle(form, rules, { externalErrors, autoDirty: true  })
+    const { r$ } = useRegle(form, rules, { externalErrors, autoDirty: false  })
 
     const validateForm = async () => {
         const result = await r$.$validate()
